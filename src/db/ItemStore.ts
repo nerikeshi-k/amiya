@@ -4,14 +4,17 @@ import { Db } from 'mongodb';
 import { customAlphabet } from 'nanoid';
 import { PostGachaResultItemRequestBody } from 'requestBody';
 
-const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+export const ITEM_STORE_COLLECTION_KEY = 'items';
+
+const ALPHABET =
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 const generateId = customAlphabet(ALPHABET, 16);
 
 export class ItemStore {
   constructor(readonly db: Db) {}
 
   private get collection() {
-    return this.db.collection<GachaResultItem>('items');
+    return this.db.collection<GachaResultItem>(ITEM_STORE_COLLECTION_KEY);
   }
 
   async getItem(key: string) {
@@ -32,5 +35,15 @@ export class ItemStore {
 
   async deleteItem(key: string) {
     return this.collection.deleteOne({ key });
+  }
+
+  async makerPlayCount(makerId: number): Promise<number> {
+    const result = await this.collection
+      .aggregate<{ count: number }>([
+        { $match: { maker_id: makerId } },
+        { $group: { _id: '$user_hash' } },
+        { $count: 'count' }
+      ]).next();
+    return result?.count ?? 0;
   }
 }
