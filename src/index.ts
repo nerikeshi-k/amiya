@@ -6,7 +6,7 @@ import { rankingView } from './views/ranking';
 
 const PORT = process.env.PORT ?? 3000;
 const DB_URL = process.env.DB_URL ?? 'mongodb://localhost:27017';
-const DB_NAME = process.env.DB_NAME ?? 'gacha-result-items-dev';
+const DB_NAME = process.env.DB_NAME ?? 'amiya-dev';
 
 async function bootstrap() {
   const store = new Store({
