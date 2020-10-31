@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "dev": "nodemon",
-    "build": "NODE_ENV=production tsc",
-    "build:dev": "NODE_ENV=development tsc"
+    "build": "rimraf -rf ./dist/* && NODE_ENV=production tsc",
+    "build:dev": "rimraf -rf ./dist/* && NODE_ENV=development tsc"
   },
   "nodemonConfig": {
     "watch": [
@@ -27,6 +27,7 @@
     "@types/node": "^14.14.6",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
     "typescript": "^4.0.5"
   }
 }
