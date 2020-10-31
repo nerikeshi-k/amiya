@@ -2,17 +2,18 @@ import Fastify from 'fastify';
 import { Store } from './db/Store';
 import { itemsView } from './views/items';
 import { makersView } from './views/makers';
+import { rankingView } from './views/ranking';
 
 const PORT = process.env.PORT ?? 3000;
 const DB_URL = process.env.DB_URL ?? 'mongodb://localhost:27017';
 const DB_NAME = process.env.DB_NAME ?? 'gacha-result-items-dev';
 
-export const store = new Store({
-  url: DB_URL,
-  dbName: DB_NAME,
-});
-
 async function bootstrap() {
+  const store = new Store({
+    url: DB_URL,
+    dbName: DB_NAME,
+  });
+
   try {
     await store.connect();
   } catch (e) {
@@ -29,8 +30,9 @@ async function bootstrap() {
     return { message: 'ok' };
   });
 
-  fastify.register(itemsView);
-  fastify.register(makersView);
+  fastify.register(itemsView(store));
+  fastify.register(makersView(store));
+  fastify.register(rankingView(store));
 
   fastify.listen(PORT, (err, address) => {
     if (err) throw err;

@@ -4,3 +4,7 @@ export type PostGachaResultItemRequestBody = {
   maker_id: number;
   user_hash: string;
 };
+
+export type PostRankingUpdateRequestBody = {
+  since: string;
+};

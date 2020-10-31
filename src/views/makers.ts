@@ -1,7 +1,11 @@
 import { FastifyPluginCallback } from 'fastify';
-import { store } from '..';
+import type { Store } from '../db/Store';
 
-export const makersView: FastifyPluginCallback = (fastify, opts, done) => {
+export const makersView = (store: Store): FastifyPluginCallback => (
+  fastify,
+  opts,
+  done
+) => {
   fastify.get<{ Params: { makerId: string } }>(
     '/makers/:makerId/play_count',
     {
@@ -18,7 +22,7 @@ export const makersView: FastifyPluginCallback = (fastify, opts, done) => {
     },
     async (request, reply) => {
       const { makerId } = request.params;
-      const count = await store.items.makerPlayCount(parseInt(makerId, 10));
+      const count = await store.items.getMakerPlayCount(parseInt(makerId, 10));
       return { count };
     }
   );

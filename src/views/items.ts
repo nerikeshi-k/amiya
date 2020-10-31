@@ -1,8 +1,12 @@
 import { FastifyPluginCallback } from 'fastify';
 import { PostGachaResultItemRequestBody } from 'requestBody';
-import { store } from '..';
+import type { Store } from '../db/Store';
 
-export const itemsView: FastifyPluginCallback = (fastify, opts, done) => {
+export const itemsView = (store: Store): FastifyPluginCallback => (
+  fastify,
+  opts,
+  done
+) => {
   fastify.get<{ Params: { key: string } }>(
     '/items/:key',
     async (request, reply) => {
@@ -10,7 +14,7 @@ export const itemsView: FastifyPluginCallback = (fastify, opts, done) => {
       const item = await store.items.getItem(key);
       if (item == null) {
         reply.status(404);
-        return {};
+        return { message: 'item not found' };
       }
       return {
         id: item.key,
@@ -48,7 +52,7 @@ export const itemsView: FastifyPluginCallback = (fastify, opts, done) => {
     async (request, reply) => {
       const { key } = request.params;
       await store.items.deleteItem(key);
-      return {};
+      return { message: 'ok' };
     }
   );
 

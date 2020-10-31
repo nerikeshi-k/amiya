@@ -33,17 +33,40 @@ export class ItemStore {
     return key;
   }
 
-  async deleteItem(key: string) {
-    return this.collection.deleteOne({ key });
+  async deleteItem(key: string): Promise<boolean> {
+    const { result } = await this.collection.deleteOne({ key });
+    return result.ok === 1;
   }
 
-  async makerPlayCount(makerId: number): Promise<number> {
+  async getMakerIds(): Promise<number[]> {
+    const results = await this.collection
+      .aggregate<{ _id: { maker_id: number } }>([
+        { $group: { _id: { maker_id: '$maker_id' } } },
+      ])
+      .toArray();
+    return results.map((item) => item._id.maker_id);
+  }
+
+  async getMakerPlayCount(makerId: number): Promise<number> {
     const result = await this.collection
       .aggregate<{ count: number }>([
         { $match: { maker_id: makerId } },
         { $group: { _id: '$user_hash' } },
-        { $count: 'count' }
-      ]).next();
+        { $count: 'count' },
+      ])
+      .next();
+    return result?.count ?? 0;
+  }
+
+  async getMakerPlayCountRecently(makerId: number, since: Date): Promise<number> {
+    const result = await this.collection
+      .aggregate<{ count: number }>([
+        { $match: { maker_id: makerId } },
+        { $match: { created_at: { $gte: since } } },
+        { $group: { _id: '$user_hash' } },
+        { $count: 'count' },
+      ])
+      .next();
     return result?.count ?? 0;
   }
 }
