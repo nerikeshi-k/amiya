@@ -29,3 +29,6 @@ $ yarn start
 ```sh
 $ yarn dev
 ```
+
+# ランキング更新
+/ranking/update にPOSTリクエストを投げると全件更新します

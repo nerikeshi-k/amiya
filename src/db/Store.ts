@@ -1,18 +1,24 @@
+import { formatISO, parseISO } from 'date-fns';
 import RedisClient, { Redis, RedisOptions } from 'ioredis';
 import { MongoClient } from 'mongodb';
 import { ItemStore } from './ItemStore';
+import { PubSubClient } from './PubSubClient';
 import { RankingStore } from './RankingStore';
 
 type Option = {
   url: string;
   dbName: string;
   redis: RedisOptions;
+  pubsub: RedisOptions;
 };
+
+const CHANNEL_UPDATE_ALL_RANKING = 'CHANNEL_UPDATE_ALL_RANKING';
 
 export class Store {
   private dbName: string;
   private mongoClient: MongoClient;
   private redisClient: Redis;
+  private pubsubClient: PubSubClient;
   private _items: ItemStore | null = null;
   private _ranking: RankingStore | null = null;
 
@@ -23,9 +29,14 @@ export class Store {
       useUnifiedTopology: true,
     });
     this.redisClient = new RedisClient(option.redis);
+    this.pubsubClient = new PubSubClient(option.pubsub);
+    this.pubsubClient.subscribe(CHANNEL_UPDATE_ALL_RANKING, (...args) =>
+      this.updateAllSnapshotAction(...args)
+    );
   }
 
   async connect() {
+    await this.pubsubClient.init();
     await this.mongoClient.connect();
     this._items = new ItemStore(
       this.mongoClient.db(this.dbName),
@@ -53,14 +64,28 @@ export class Store {
     return _ranking;
   }
 
-  async updateAllSnapshot(period: { since: Date, until: Date }) {
+  async updateAllSnapshot(period: Period) {
+    return this.pubsubClient.publish(
+      CHANNEL_UPDATE_ALL_RANKING,
+      JSON.stringify({
+        since: formatISO(period.since),
+        until: formatISO(period.until),
+      })
+    );
+  }
+
+  private async updateAllSnapshotAction(message: string) {
+    const payload: {
+      since: string;
+      until: string;
+    } = JSON.parse(message);
     const makerIds = await this.items.getMakerIds();
     await Promise.all(
       makerIds.map(async (makerId) => {
-        const count = await this.items.getMakerPlayCountRecently(
-          makerId,
-          period,
-        );
+        const count = await this.items.getMakerPlayCountRecently(makerId, {
+          since: parseISO(payload.since),
+          until: parseISO(payload.until),
+        });
         this.ranking.updateSnapshot(makerId, count);
       })
     );

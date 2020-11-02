@@ -12,14 +12,17 @@ const REDIS_HOST = process.env.REDIS_HOST ?? 'localhost';
 const REDIS_DB = parseInt(process.env.REDIS_DB ?? '0', 10);
 
 async function bootstrap() {
+  const redisConfig = {
+    port: REDIS_PORT,
+    host: REDIS_HOST,
+    db: REDIS_DB,
+  };
+
   const store = new Store({
     url: DB_URL,
     dbName: DB_NAME,
-    redis: {
-      port: REDIS_PORT,
-      host: REDIS_HOST,
-      db: REDIS_DB,
-    },
+    redis: redisConfig,
+    pubsub: redisConfig,
   });
 
   try {
