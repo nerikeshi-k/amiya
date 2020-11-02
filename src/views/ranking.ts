@@ -1,7 +1,7 @@
 import { isValid, parseISO } from 'date-fns';
 import { FastifyPluginCallback } from 'fastify';
-import { PostRankingUpdateRequestBody } from 'requestBody';
 import type { Store } from '../db/Store';
+import { PostRankingUpdateRequestBody } from '../types/requestBody';
 
 export const rankingView = (store: Store): FastifyPluginCallback => (
   fastify,
@@ -31,7 +31,7 @@ export const rankingView = (store: Store): FastifyPluginCallback => (
     }
   );
 
-  // ランキング用スナップショットに更新をかける
+  // ランキング用スナップショットに強制更新をかける
   fastify.post<{ Body: PostRankingUpdateRequestBody }>(
     '/ranking/update',
     {
@@ -41,18 +41,20 @@ export const rankingView = (store: Store): FastifyPluginCallback => (
           required: ['since'],
           properties: {
             since: { type: 'string' },
+            until: { type: 'string' },
           },
         },
       },
     },
     async (request, reply) => {
-      const { since: sinceString } = request.body;
+      const { since: sinceString, until: untilString } = request.body;
       const since = parseISO(sinceString);
-      if (!isValid(since)) {
+      const until = parseISO(untilString);
+      if (!isValid(since) || !isValid(until)) {
         reply.status(400);
         return { message: 'date format is invalid' };
       }
-      await store.updateAllSnapshot(since);
+      await store.updateAllSnapshot({ since, until });
       return { message: 'ok' };
     }
   );

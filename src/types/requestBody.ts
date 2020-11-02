@@ -7,4 +7,5 @@ export type PostGachaResultItemRequestBody = {
 
 export type PostRankingUpdateRequestBody = {
   since: string;
+  until: string;
 };

@@ -1,5 +1,5 @@
 import { FastifyPluginCallback } from 'fastify';
-import { PostGachaResultItemRequestBody } from 'requestBody';
+import { PostGachaResultItemRequestBody } from '../types/requestBody';
 import type { Store } from '../db/Store';
 
 export const itemsView = (store: Store): FastifyPluginCallback => (

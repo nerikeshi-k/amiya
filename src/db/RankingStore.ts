@@ -1,13 +1,15 @@
+import { Redis } from 'ioredis';
 import { Db } from 'mongodb';
+import { PlayCountSnapshot } from '../types/PlayCountSnapshot';
 
-const LATE_24_SNAPSHOT_STORE_COLLECTION_KEY = 'late-24-snapshot';
+const RANKING_STORE_SNAPSHOT_COLLECTION_KEY = 'rankingSnapshot';
 
 export class RankingStore {
-  constructor(readonly db: Db) {}
+  constructor(readonly db: Db, readonly redis: Redis) {}
 
   private get snapshotCollection() {
     return this.db.collection<PlayCountSnapshot>(
-      LATE_24_SNAPSHOT_STORE_COLLECTION_KEY
+      RANKING_STORE_SNAPSHOT_COLLECTION_KEY
     );
   }
 

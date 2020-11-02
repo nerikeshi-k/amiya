@@ -5,3 +5,8 @@ export type GachaResultItem = {
   maker_id: number;
   user_hash: string;
 };
+
+export type MakerPlayCount = {
+  maker_id: number;
+  play_count: number;
+}
