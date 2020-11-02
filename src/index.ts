@@ -11,11 +11,14 @@ const REDIS_PORT = parseInt(process.env.REDIS_PORT ?? '6379', 10);
 const REDIS_HOST = process.env.REDIS_HOST ?? 'localhost';
 const REDIS_DB = parseInt(process.env.REDIS_DB ?? '0', 10);
 
+const REDIS_KEY_PREFIX = 'amiya:';
+
 async function bootstrap() {
   const redisConfig = {
     port: REDIS_PORT,
     host: REDIS_HOST,
     db: REDIS_DB,
+    keyPredix: REDIS_KEY_PREFIX,
   };
 
   const store = new Store({

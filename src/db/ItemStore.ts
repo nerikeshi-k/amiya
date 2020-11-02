@@ -12,6 +12,7 @@ const ALPHABET =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 const generateId = customAlphabet(ALPHABET, 16);
 
+const LATE_PLAYED_KEY_PREFIX = 'items:late-played-log:';
 const LATE_PLAYED_EXPIRES_SECONDS = 60 * 60 * 24; // 1 day
 
 export class ItemStore {
@@ -28,7 +29,7 @@ export class ItemStore {
   }
 
   private getLatePlayedLogKey(maker_id: number, user_hash: string) {
-    return `late-played-log:${maker_id}--${user_hash}`;
+    return `${LATE_PLAYED_KEY_PREFIX}${maker_id}--${user_hash}`;
   }
 
   private async insertItemToCollection(
@@ -96,6 +97,7 @@ export class ItemStore {
     return result?.play_count ?? 0;
   }
 
+  // slow method
   async getMakerPlayCountRecently(
     makerId: number,
     period: { since: Date; until: Date }

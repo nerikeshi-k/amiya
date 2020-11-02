@@ -44,7 +44,8 @@ export class Store {
     );
     this._ranking = new RankingStore(
       this.mongoClient.db(this.dbName),
-      this.redisClient
+      this.redisClient,
+      this.pubsubClient
     );
   }
 

@@ -1,6 +1,6 @@
 import RedisClient, { Redis, RedisOptions } from 'ioredis';
 
-type ChannelAction = (message: string) => Promise<void>;
+type ChannelAction = (message: string) => void;
 
 export class PubSubClient {
   private subscriber: Redis;
