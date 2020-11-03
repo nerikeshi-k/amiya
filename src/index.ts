@@ -5,6 +5,7 @@ import { makersView } from './views/makers';
 import { rankingView } from './views/ranking';
 
 const PORT = process.env.PORT ?? 3000;
+const HOST = process.env.HOST ?? 'localhost';
 const DB_URL = process.env.DB_URL ?? 'mongodb://localhost:27017';
 const DB_NAME = process.env.DB_NAME ?? 'amiya-dev';
 const REDIS_PORT = parseInt(process.env.REDIS_PORT ?? '6379', 10);
@@ -48,7 +49,7 @@ async function bootstrap() {
   fastify.register(makersView(store));
   fastify.register(rankingView(store));
 
-  fastify.listen(PORT, (err, address) => {
+  fastify.listen(PORT, HOST, (err, address) => {
     if (err) throw err;
     fastify.log.info(`server listening on ${address}`);
   });
