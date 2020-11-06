@@ -13,6 +13,7 @@ const REDIS_HOST = process.env.REDIS_HOST ?? 'localhost';
 const REDIS_DB = parseInt(process.env.REDIS_DB ?? '0', 10);
 
 const REDIS_KEY_PREFIX = 'amiya:';
+const MAX_PARAM_LENGTH = 20000;
 
 async function bootstrap() {
   const redisConfig = {
@@ -39,6 +40,7 @@ async function bootstrap() {
 
   const fastify = Fastify({
     logger: true,
+    maxParamLength: MAX_PARAM_LENGTH,
   });
 
   fastify.get('/health_check', async (request, reply) => {
