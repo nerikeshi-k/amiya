@@ -27,5 +27,28 @@ export const makersView = (store: Store): FastifyPluginCallback => (
     }
   );
 
+  fastify.get<{ Params: { makerIds: string } }>(
+    '/makers/:makerIds/play_count_many',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            makerIds: {
+              type: 'string',
+              regex: /^\d+(?:,\d+)*$/,
+            },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const { makerIds } = request.params;
+      const parsedMakerIds = makerIds.split(',').map((id) => parseInt(id, 10));
+      const result = await store.items.getMakerPlayCountMany(parsedMakerIds);
+      return result;
+    }
+  );
+
   done();
 };

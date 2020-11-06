@@ -63,7 +63,7 @@ export class ItemStore {
     }
   }
 
-  async getItem(key: string) {
+  async getItem(key: string): Promise<GachaResultItem | null> {
     return this.itemsCollection.findOne({ key });
   }
 
@@ -95,6 +95,18 @@ export class ItemStore {
       maker_id: makerId,
     });
     return result?.play_count ?? 0;
+  }
+
+  async getMakerPlayCountMany(makerIds: number[]): Promise<MakerPlayCount[]> {
+    const result = await this.playCountCollection
+      .find({
+        maker_id: { $in: makerIds },
+      })
+      .toArray();
+    return result.map((item) => ({
+      maker_id: item.maker_id,
+      play_count: item.play_count,
+    }));
   }
 
   // slow method
