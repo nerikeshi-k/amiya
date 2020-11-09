@@ -116,8 +116,8 @@ export class ItemStore {
   ): Promise<number> {
     const result = await this.itemsCollection
       .aggregate<{ count: number }>([
-        { $match: { created_at: { $gte: period.since, $lte: period.until } } },
         { $match: { maker_id: makerId } },
+        { $match: { created_at: { $gte: period.since, $lte: period.until } } },
         { $group: { _id: '$user_hash' } },
         { $count: 'count' },
       ])
