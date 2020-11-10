@@ -29,17 +29,17 @@
     "@types/node" "*"
 
 "@types/mongodb@^3.5.32":
-  version "3.5.32"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.32.tgz#c3f72a9a157922e6b9a05690552abe8479e79232"
-  integrity sha512-lBV8D5S5UNlWihHYQkEebqQTRazm5SglwQ126ls03eeYk2NJN4P72udUxJtyuKSmSFKvhLeekfNoPcyFa3BNdQ==
+  version "3.5.33"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.33.tgz#1084c3004a426df11b5a985641e7f58d7ceb52a6"
+  integrity sha512-biMkaYFyUP8jNczbi2BgtvVfiEtPZ+NTf+Jz4LmsQjO+Zk+kx1WNjz8gNArWlA/5DXVwMVWgIFtbj6Tslt1yWw==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^14.14.6":
-  version "14.14.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.6.tgz#146d3da57b3c636cc0d1769396ce1cfa8991147f"
-  integrity sha512-6QlRuqsQ/Ox/aJEQWBEJG7A9+u7oSYl3mem/K8IzxXG/kAGbV1YPD9Bg9Zw3vyxC/YP+zONKwy8hGkSt1jxFMw==
+  version "14.14.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.7.tgz#8ea1e8f8eae2430cf440564b98c6dfce1ec5945d"
+  integrity sha512-Zw1vhUSQZYw+7u5dAwNbIA9TuTotpzY/OF7sJM9FqPOF3SPjKnxrjoTktXDZgUjybf4cWVBP7O8wvKdSaGHweg==
 
 abbrev@1:
   version "1.1.1"
@@ -404,9 +404,9 @@ fastify-warning@^0.2.0:
   integrity sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==
 
 fastify@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.7.0.tgz#b177cbb50efe4d38a3758427432f46eb873843b1"
-  integrity sha512-xmiR1TOSNXXNHfEvBwhWlyj158q59vZkPLIKQ71f7qJG5QMPqCbeYUUFRaDKTaLFhRqmLLFprBpJsO5nbSMiPQ==
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.8.0.tgz#455bfa70394322247050c330d0e52532b349662d"
+  integrity sha512-w57/uvyQWzF/KSr9CbWQ5nfTqSSfYcmrems9Lc3VvtrAF7EsLbfZQBQZul6xwvE1uEfxA4nGdoUKqpU7xiv7cw==
   dependencies:
     abstract-logging "^2.0.0"
     ajv "^6.12.2"
@@ -414,7 +414,7 @@ fastify@^3.7.0:
     fast-json-stringify "^2.2.1"
     fastify-error "^0.2.0"
     fastify-warning "^0.2.0"
-    find-my-way "^3.0.0"
+    find-my-way "^3.0.5"
     flatstr "^1.0.12"
     light-my-request "^4.2.0"
     pino "^6.2.1"
@@ -439,10 +439,10 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-find-my-way@^3.0.0:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/find-my-way/-/find-my-way-3.0.4.tgz#a485973d1a3fdafd989ac9f12fd2d88e83cda268"
-  integrity sha512-Trl/mNAVvTgCpo9ox6yixkwiZUvecKYUQZoAuMCBACsgGqv+FbWe+jE5sBA5+U8LIWrJk/cw8zPV53GPrjTnsw==
+find-my-way@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/find-my-way/-/find-my-way-3.0.5.tgz#f71c5ef1b4865401e1b97ba428121a8f55439eec"
+  integrity sha512-FweGg0cv1sBX8z7WhvBX5B5AECW4Zdh/NiB38Oa0qwSNIyPgRBCl/YjxuZn/rz38E/MMBHeVKJ22i7W3c626Gg==
   dependencies:
     fast-decode-uri-component "^1.0.1"
     safe-regex2 "^2.0.0"
@@ -708,9 +708,9 @@ latest-version@^5.0.0:
     package-json "^6.3.0"
 
 light-my-request@^4.2.0:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/light-my-request/-/light-my-request-4.2.1.tgz#c5a613af6a0cbb91eff06f83844ceac85ed03b10"
-  integrity sha512-33FZvX/418IEy0sXldsLiJifbS/ruttcVveTbbZ8sQVR2VSFPA39hBu/iF/hVkt/1V0N7CdTQg4jiiVPdGgW8A==
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/light-my-request/-/light-my-request-4.3.0.tgz#0178dfe7f298089df976f8e4cc0e10998be50aad"
+  integrity sha512-WrEvI7V41ZbEUe0bsfuS170QrYSVADKA0JiWyK/lVtm4Ra26pl9CYKBdlr823/s37N2wMJze8YNkHbg11aZWAw==
   dependencies:
     ajv "^6.12.2"
     cookie "^0.4.0"
@@ -768,9 +768,9 @@ minimist@^1.2.0:
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
 
 mongodb@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.6.2.tgz#1154a4ac107bf1375112d83a29c5cf97704e96b6"
-  integrity sha512-sSZOb04w3HcnrrXC82NEh/YGCmBuRgR+C1hZgmmv4L6dBz4BkRse6Y8/q/neXer9i95fKUBbFi4KgeceXmbsOA==
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.6.3.tgz#eddaed0cc3598474d7a15f0f2a5b04848489fd05"
+  integrity sha512-rOZuR0QkodZiM+UbQE5kDsJykBqWi0CL4Ec2i1nrGrUI3KO11r6Fbxskqmq3JK2NH7aW4dcccBuUujAP0ERl5w==
   dependencies:
     bl "^2.2.1"
     bson "^1.1.4"
@@ -1139,9 +1139,9 @@ standard-as-callback@^2.0.1:
   integrity sha512-NQOxSeB8gOI5WjSaxjBgog2QFw55FV8TkS6Y07BiB3VJ8xNTvUYm0wl0s8ObgQ5NhdpnNfigMIKjgPESzgr4tg==
 
 string-similarity@^4.0.1:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/string-similarity/-/string-similarity-4.0.2.tgz#1dc29518d0e92e50509499ce2974368f77bbb1b1"
-  integrity sha512-eCsPPyoQBgY4TMpVD6DVfO7pLrimUONriaO4Xjp3WPUW0YnNLqdHgRj23xotLlqrL90eJhBeq3zdAJf2mQgfBQ==
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/string-similarity/-/string-similarity-4.0.3.tgz#ef52d6fc59c8a0fc93b6307fbbc08cc6e18cde21"
+  integrity sha512-QEwJzNFCqq+5AGImk5z4vbsEPTN/+gtyKfXBVLBcbPBRPNganZGfQnIuf9yJ+GiwSnD65sT8xrw/uwU1Q1WmfQ==
 
 string-width@^3.0.0:
   version "3.1.0"
