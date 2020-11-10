@@ -81,14 +81,12 @@ export class Store {
       until: string;
     } = JSON.parse(message);
     const makerIds = await this.items.getMakerIds();
-    await Promise.all(
-      makerIds.map(async (makerId) => {
-        const count = await this.items.getMakerPlayCountRecently(makerId, {
-          since: parseISO(payload.since),
-          until: parseISO(payload.until),
-        });
-        this.ranking.updateSnapshot(makerId, count);
-      })
-    );
+    const results = await this.items.getMakerPlayCountsRecently(makerIds, {
+      since: parseISO(payload.since),
+      until: parseISO(payload.until),
+    });
+    results.forEach((result) => {
+      this.ranking.updateSnapshot(result.makerId, result.count);
+    });
   }
 }

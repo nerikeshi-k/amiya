@@ -109,19 +109,34 @@ export class ItemStore {
     }));
   }
 
-  // slow method
-  async getMakerPlayCountRecently(
-    makerId: number,
+  async getMakerPlayCountsRecently(
+    makerIds: number[],
     period: { since: Date; until: Date }
-  ): Promise<number> {
-    const result = await this.itemsCollection
-      .aggregate<{ count: number }>([
-        { $match: { maker_id: makerId } },
-        { $match: { created_at: { $gte: period.since, $lte: period.until } } },
-        { $group: { _id: '$user_hash' } },
-        { $count: 'count' },
-      ])
-      .next();
-    return result?.count ?? 0;
+  ): Promise<{ makerId: number; count: number }[]> {
+    const userHashMap = makerIds.reduce((map, id) => {
+      map.set(id, new Set());
+      return map;
+    }, new Map<number, Set<string>>());
+    const cursor = await this.itemsCollection
+      .find({ created_at: { $gte: period.since, $lte: period.until } })
+      .batchSize(1000);
+    while (await cursor.hasNext()) {
+      const chunk = await cursor.next();
+      if (chunk == null) {
+        break;
+      }
+      const hashSet = userHashMap.get(chunk.maker_id);
+      if (hashSet == null) {
+        continue;
+      }
+      hashSet.add(chunk.user_hash);
+      userHashMap.set(chunk.maker_id, hashSet);
+    }
+    const result: { makerId: number; count: number }[] = [];
+    for (let key of userHashMap.keys()) {
+      const set = userHashMap.get(key);
+      result.push({ makerId: key, count: set != null ? set.size : 0 });
+    }
+    return result;
   }
 }
